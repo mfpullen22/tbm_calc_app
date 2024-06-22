@@ -31,6 +31,7 @@ class _TabsScreenState extends State<TabsScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(activePageTitle),
+        backgroundColor: Colors.lightBlueAccent,
       ),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
