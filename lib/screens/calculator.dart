@@ -55,7 +55,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           ? 5.5 * (0.0060103239)
           : double.parse(_bloodGlucose.text) * (0.0060103239);
 
-      _cragVal = _crag == "Positive" ? -3.502162269 : 0;
+      _cragVal = _crag == "Positive" ? (-3.502162269) : 0;
 
       _feverVal = _fever == "Yes" ? 0.4718978543 : 0;
 
@@ -69,8 +69,15 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           _feverVal! +
           _hivVal! +
           (-0.6318415877));
+      print(_csfWbcVal);
+      print(_csfDiffVal);
+      print(_csfGluVal);
+      print(_bloodGluVal);
+      print(_cragVal);
+      print(_feverVal);
+      print(_hivVal);
       print(odds);
-      prob = odds! / (1 + odds!) * 100;
+      prob = (odds! / (1 + odds!)) * 100;
       print(prob);
       probString = prob!.toStringAsFixed(2) + "%";
 
