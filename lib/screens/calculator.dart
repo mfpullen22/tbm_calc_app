@@ -32,6 +32,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   double? prob;
   String? interp;
   String? probString;
+  Color? textColor;
 
   void _calculate() {
     if (_formKey.currentState!.validate()) {
@@ -69,24 +70,28 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
           _feverVal! +
           _hivVal! +
           (-0.6318415877));
-      print(_csfWbcVal);
-      print(_csfDiffVal);
-      print(_csfGluVal);
-      print(_bloodGluVal);
-      print(_cragVal);
-      print(_feverVal);
-      print(_hivVal);
-      print(odds);
+      //print(_csfWbcVal);
+      //print(_csfDiffVal);
+      //print(_csfGluVal);
+      //print(_bloodGluVal);
+      //print(_cragVal);
+      //print(_feverVal);
+      //print(_hivVal);
+      //print(odds);
       prob = (odds! / (1 + odds!)) * 100;
-      print(prob);
+      //print(prob);
+      // ignore: prefer_interpolation_to_compose_strings
       probString = prob!.toStringAsFixed(2) + "%";
 
       if (prob! <= 5) {
+        textColor = Colors.blue;
         interp =
             "Very unlikely to be TB meningitis. Consider another diagnosis in your differential.";
       } else if (prob! > 5 && prob! < 40) {
+        textColor = Colors.yellow[800];
         interp = "Possible TB meningitis. Consider further diagnostic testing.";
       } else {
+        textColor = Colors.red;
         interp = "Very likely TB meningitis. Consider starting treatment.";
       }
 
@@ -116,8 +121,8 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       Text(probString!,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyMedium!
-                              .copyWith(color: Colors.blue)),
+                              .bodyLarge!
+                              .copyWith(color: textColor)),
                     ],
                   ),
                   const SizedBox(height: 10),
