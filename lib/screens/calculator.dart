@@ -2,6 +2,7 @@
 
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import "dart:math";
 
@@ -170,286 +171,301 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
     return Stack(
       children: [
-        SvgPicture.asset(
-          "assets/images/background_blue.svg",
-          alignment: Alignment.center,
-          fit: BoxFit.cover,
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+        Positioned.fill(
+          child: SvgPicture.asset(
+            "assets/images/background_blue.svg",
+            alignment: Alignment.center,
+            fit: BoxFit.cover,
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("CSF WBC Count (cells/mm\u00B3):",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d*\.?\d*')),
+        Center(
+          child: FractionallySizedBox(
+            heightFactor: 1,
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Form(
+                key: _formKey,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("CSF WBC Count (cells/mm\u00B3):",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: TextFormField(
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d*')),
+                                  ],
+                                  controller: _csfWbcCount,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a value';
+                                    }
+                                    if (double.tryParse(value) == null) {
+                                      return 'Please enter a valid number';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) => setState(() {}),
+                                ),
+                              ),
                             ],
-                            controller: _csfWbcCount,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a value';
-                              }
-                              if (double.tryParse(value) == null) {
-                                return 'Please enter a valid number';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) => setState(() {}),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                if (_csfWbcCount.text.isNotEmpty &&
-                    double.parse(_csfWbcCount.text) > 2.5)
-                  Card(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("CSF Differential:",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(color: Colors.black)),
-                          const SizedBox(width: spacing),
-                          Container(
-                            width: fieldWidth,
-                            child: DropdownButtonFormField<String>(
-                                value: "None",
-                                items: ["None", "Neutrophilic", "Lymphocytic"]
-                                    .map((String value) {
-                                  return DropdownMenuItem(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                                onChanged: (String? value) {
-                                  setState(() {
-                                    _csfDifferential = value!;
-                                  });
-                                }),
-                          ),
-                        ],
                       ),
-                    ),
-                  ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("CSF Glucose (md/dL):",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
+                      if (_csfWbcCount.text.isNotEmpty &&
+                          double.parse(_csfWbcCount.text) > 2.5)
+                        Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("CSF Differential:",
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyLarge!
+                                        .copyWith(color: Colors.black)),
+                                const SizedBox(width: spacing),
+                                Container(
+                                  width: fieldWidth,
+                                  child: DropdownButtonFormField<String>(
+                                      value: "None",
+                                      items: [
+                                        "None",
+                                        "Neutrophilic",
+                                        "Lymphocytic"
+                                      ].map((String value) {
+                                        return DropdownMenuItem(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                      onChanged: (String? value) {
+                                        setState(() {
+                                          _csfDifferential = value!;
+                                        });
+                                      }),
+                                ),
+                              ],
                             ),
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d*\.?\d*')),
-                            ],
-                            controller: _csfGlucose,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a value';
-                              }
-                              if (double.tryParse(value) == null) {
-                                return 'Please enter a valid number';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) => setState(() {}),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Blood Glucose (md/dL):",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: TextFormField(
-                            keyboardType: const TextInputType.numberWithOptions(
-                              decimal: true,
-                            ),
-                            inputFormatters: <TextInputFormatter>[
-                              FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d*\.?\d*')),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("CSF Glucose (md/dL):",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: TextFormField(
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d*')),
+                                  ],
+                                  controller: _csfGlucose,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a value';
+                                    }
+                                    if (double.tryParse(value) == null) {
+                                      return 'Please enter a valid number';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) => setState(() {}),
+                                ),
+                              ),
                             ],
-                            controller: _bloodGlucose,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter a value';
-                              }
-                              if (double.tryParse(value) == null) {
-                                return 'Please enter a valid number';
-                              }
-                              return null;
-                            },
-                            onChanged: (value) => setState(() {}),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Cryptococcal Antigen:",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: DropdownButtonFormField<String>(
-                              value: "Negative",
-                              items: [
-                                "Negative",
-                                "Positive",
-                              ].map((String value) {
-                                return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _crag = value!;
-                                });
-                              }),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Blood Glucose (md/dL):",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: TextFormField(
+                                  keyboardType:
+                                      const TextInputType.numberWithOptions(
+                                    decimal: true,
+                                  ),
+                                  inputFormatters: <TextInputFormatter>[
+                                    FilteringTextInputFormatter.allow(
+                                        RegExp(r'^\d*\.?\d*')),
+                                  ],
+                                  controller: _bloodGlucose,
+                                  validator: (value) {
+                                    if (value == null || value.isEmpty) {
+                                      return 'Please enter a value';
+                                    }
+                                    if (double.tryParse(value) == null) {
+                                      return 'Please enter a valid number';
+                                    }
+                                    return null;
+                                  },
+                                  onChanged: (value) => setState(() {}),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Fever \u2265 37.8\u00B0C",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: DropdownButtonFormField<String>(
-                              value: "No",
-                              items: [
-                                "No",
-                                "Yes",
-                              ].map((String value) {
-                                return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _fever = value!;
-                                });
-                              }),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Cryptococcal Antigen:",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: DropdownButtonFormField<String>(
+                                    value: "Negative",
+                                    items: [
+                                      "Negative",
+                                      "Positive",
+                                    ].map((String value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        _crag = value!;
+                                      });
+                                    }),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("HIV Status:",
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.black)),
-                        const SizedBox(width: spacing),
-                        Container(
-                          width: fieldWidth,
-                          child: DropdownButtonFormField<String>(
-                              value: "Negative",
-                              items: [
-                                "Negative",
-                                "Positive",
-                              ].map((String value) {
-                                return DropdownMenuItem(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  _hiv = value!;
-                                });
-                              }),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Fever \u2265 37.8\u00B0C",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: DropdownButtonFormField<String>(
+                                    value: "No",
+                                    items: [
+                                      "No",
+                                      "Yes",
+                                    ].map((String value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        _fever = value!;
+                                      });
+                                    }),
+                              ),
+                            ],
+                          ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("HIV Status:",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(color: Colors.black)),
+                              const SizedBox(width: spacing),
+                              Container(
+                                width: fieldWidth,
+                                child: DropdownButtonFormField<String>(
+                                    value: "Negative",
+                                    items: [
+                                      "Negative",
+                                      "Positive",
+                                    ].map((String value) {
+                                      return DropdownMenuItem(
+                                        value: value,
+                                        child: Text(value),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? value) {
+                                      setState(() {
+                                        _hiv = value!;
+                                      });
+                                    }),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ElevatedButton(
+                          onPressed: () {
+                            _calculate();
+                          },
+                          child: const Text("Calculate"),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _calculate();
-                    },
-                    child: const Text("Calculate"),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         ),
