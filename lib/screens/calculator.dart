@@ -1,11 +1,12 @@
 // ignore_for_file: sized_box_for_whitespace
 
+import 'package:flutter/gestures.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import "dart:math";
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:google_fonts/google_fonts.dart';
+import "dart:math";
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
@@ -35,6 +36,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String? interp;
   String? probString;
   Color? textColor;
+
+  void _launchURL(String url) async {
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   void _calculate() {
     if (_formKey.currentState!.validate()) {
@@ -115,20 +124,52 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                     children: [
                       Text(
                         "TB Meningitis Probability:  ",
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyLarge!
-                            .copyWith(color: Colors.black),
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
                       ),
-                      Text(probString!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge!
-                              .copyWith(color: textColor)),
+                      Text(
+                        probString!,
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 16,
+                          color: textColor,
+                        ),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  Text(interp!),
+                  Text(
+                    interp!,
+                    style: GoogleFonts.robotoCondensed(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(children: [
+                      TextSpan(
+                        text:
+                            "Peer-reviewed data supporting the model and calculations used in this app can be found ",
+                        style: GoogleFonts.robotoCondensed(
+                          fontSize: 16,
+                          color: Colors.black,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'HERE',
+                        style: GoogleFonts.robotoCondensed(
+                            color: const Color.fromARGB(255, 72, 0, 255),
+                            decoration: TextDecoration.underline),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            _launchURL(
+                                'https://www.ajtmh.org/view/journals/tpmd/aop/article-10.4269-ajtmh.23-0789/article-10.4269-ajtmh.23-0789.xml');
+                          },
+                      ),
+                    ]),
+                  ),
                 ],
               ),
             ),
@@ -196,6 +237,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               Text("CSF WBC Count (cells/mm\u00B3):",
                                   style: Theme.of(context)
@@ -237,6 +279,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
+                              mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text("CSF Differential:",
@@ -273,6 +316,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("CSF Glucose (md/dL):",
@@ -313,6 +357,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Blood Glucose (md/dL):",
@@ -353,6 +398,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Cryptococcal Antigen:",
@@ -388,6 +434,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("Fever \u2265 37.8\u00B0C",
@@ -423,6 +470,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Row(
+                            mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text("HIV Status:",
