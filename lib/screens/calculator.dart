@@ -2,9 +2,10 @@
 
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import "dart:math";
+
+import 'package:google_fonts/google_fonts.dart';
 
 class CalculatorScreen extends StatefulWidget {
   const CalculatorScreen({super.key});
@@ -459,6 +460,17 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                           onPressed: () {
                             _calculate();
                           },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            foregroundColor: Colors.white,
+                            textStyle: GoogleFonts.robotoCondensed(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
                           child: const Text("Calculate"),
                         ),
                       ),

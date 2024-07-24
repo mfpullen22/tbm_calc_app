@@ -21,7 +21,7 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     Widget activePage = const CalculatorScreen();
-    var activePageTitle = "TB Meningitis Calculator";
+    var activePageTitle = "TB Meningitis Risk Calculator";
 
     if (_selectedPageIndex == 1) {
       activePage = const InfoScreen();
