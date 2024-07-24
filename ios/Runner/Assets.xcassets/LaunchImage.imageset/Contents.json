@@ -1,42 +1,42 @@
 {
   "images" : [
     {
-      "filename" : "brain_icon-removebg-preview.png",
+      "filename" : "brain_icon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 6.png",
+      "filename" : "brain_icon@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 7.png",
+      "filename" : "brain_icon@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 1.png",
+      "filename" : "brain_icon 1.png",
       "idiom" : "iphone",
       "scale" : "1x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 2.png",
+      "filename" : "brain_icon@2x 1.png",
       "idiom" : "iphone",
       "scale" : "2x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 3.png",
+      "filename" : "brain_icon@3x 1.png",
       "idiom" : "iphone",
       "scale" : "3x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 4.png",
+      "filename" : "brain_icon 2.png",
       "idiom" : "ipad",
       "scale" : "1x"
     },
     {
-      "filename" : "brain_icon-removebg-preview 5.png",
+      "filename" : "brain_icon@2x 2.png",
       "idiom" : "ipad",
       "scale" : "2x"
     }
